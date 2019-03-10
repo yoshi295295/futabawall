@@ -235,7 +235,7 @@ function updatelog($resno=0){
         $size = filesize($img);//altにサイズ表示
         if($w && $h){//サイズがある時
           if(@is_file(THUMB_DIR.$time.'s.jpg')){
-            $imgsrc = "<small>サムネイル表示</small><br><a href=\"".$src."\" target=_blank><img src=".THUMB_DIR.$time.'s.jpg'.
+            $imgsrc = "<small>Thumbnail displayed, click image for full size.</small><br><a href=\"".$src."\" target=_blank><img src=".THUMB_DIR.$time.'s.jpg'.
         " border=0 align=left width=$w height=$h hspace=20 alt=\"".$size." B\"></a>";
           }
           else{
@@ -266,7 +266,7 @@ function updatelog($resno=0){
     }
 
     $dat.='<table align=right><tr><td nowrap align=center>
-<input type=hidden name=mode value=usrdel>【Delete Post】[<input type=checkbox name=onlyimgdel value=on>File Only]<br>
+<input type=hidden name=mode value=usrdel>Delete Post[<input type=checkbox name=onlyimgdel value=on>File Only]<br>
 Password<input type=password name=pwd size=8 maxlength=8 value="">
 <input type=submit value="Delete"></form></td></tr></table>';
 
@@ -396,7 +396,7 @@ function error($mes,$dest=''){
 
   echo $dat;
   echo "<br><br><hr size=1><br><br>
-        <center><font color=red size=5><b>$mes<br><br><a href=".PHP_SELF2.">リロード</a></b></font></center>
+        <center><font color=red size=5><b>$mes<br><br><a href=".PHP_SELF2.">Return</a></b></font></center>
         <br><br><hr size=1>";
   die("</body></html>");
 }
@@ -545,15 +545,15 @@ function regist($name,$email,$sub,$comment,$url,$pwd,$upfile,$upfile_name,$resto
     //copy($upfile, $dest);
     $upfile_name = CleanStr($upfile_name);
     if(!is_file($dest)){
-      error("アップロードに失敗しました<br>サーバがサポートしていない可能性があります",$dest);
+      error("Error: Upload failed.",$dest);
     }
     $size = getimagesize($dest);
     if(!is_array($size)){
-      error("アップロードに失敗しました<br>画像ファイル以外は受け付けません",$dest);
+      error("Error: Upload failed.",$dest);
     }
     $is_uploaded = ImageFile::getNew()->isUploaded($badfile, $dest);
     if ($is_uploaded === true) {
-      error("アップロードに失敗しました<br>同じ画像がありました", $dest); //拒絶画像
+      error("Error: Duplicate md5 checksum detected.", $dest); //拒絶画像
       return;
     }
     chmod($dest,0666);
@@ -566,7 +566,7 @@ function regist($name,$email,$sub,$comment,$url,$pwd,$upfile,$upfile_name,$resto
     $H = $desired_size['height'];
     $extension = ExtensionRepository::find($size[2]);
 
-    $mes = "画像 $upfile_name のアップロードが成功しました<br><br>";
+    $mes = "$upfile_name uploaded!<br><br>";
   }
 
   foreach($badstring as $value){
@@ -575,11 +575,11 @@ function regist($name,$email,$sub,$comment,$url,$pwd,$upfile,$upfile_name,$resto
        preg_match($pattern, $sub) === 1 || 
        preg_match($pattern, $name) === 1 || 
        preg_match($pattern, $email) === 1 ){
-      error("拒絶されました(str)",$dest);
+      error("Error: String refused.(str)",$dest);
     };
   }
   if($_SERVER["REQUEST_METHOD"] != "POST"){
-    error("不正な投稿をしないで下さい(post)",$dest);
+    error("Error: Unjust POST.(post)",$dest);
   }
   // フォーム内容をチェック
   if(!$name||preg_match("/^[ |　|]*$/",$name) === 1){
@@ -599,8 +599,8 @@ function regist($name,$email,$sub,$comment,$url,$pwd,$upfile,$upfile_name,$resto
     error("Error: No text entered.",$dest);
   }
 
-  $name=preg_replace("/管理/","\"管理\"",$name);
-  $name=preg_replace("/削除/","\"削除\"",$name);
+  $name=preg_replace("/Manager/","\"Manager\"",$name);
+  $name=preg_replace("/Deletion/","\"Deletion\"",$name);
 
   if(strlen($comment) > 1000){
     error("Error: Field too long.",$dest);
@@ -615,10 +615,10 @@ function regist($name,$email,$sub,$comment,$url,$pwd,$upfile,$upfile_name,$resto
     error("Error: Field too long.",$dest);
   }
   if(strlen($resto) > 10){
-    error("異常です",$dest);
+    error("Error: Abnormal reply.",$dest);
   }
   if(strlen($url) > 10){
-    error("異常です",$dest);
+    error("Error: Abnormal reply.",$dest);
   }
 
   //ホスト取得
@@ -626,7 +626,7 @@ function regist($name,$email,$sub,$comment,$url,$pwd,$upfile,$upfile_name,$resto
 
   foreach($badip as $value){ //拒絶host
     if(preg_match("/$value$/i",$host)){
-     error("拒絶されました(host)",$dest);
+     error("Error: String refused.(host)",$dest);
     }
   }
 
@@ -674,7 +674,7 @@ function regist($name,$email,$sub,$comment,$url,$pwd,$upfile,$upfile_name,$resto
 
   $c_pass = $pwd;
   $pass = ($pwd) ? substr(md5($pwd),2,8) : "*";
-  $youbi = array('日','月','火','水','木','金','土');
+  $youbi = array('Sun','Mon','Tue','Wed','Thu','Fri','Sat');
   $yd = $youbi[gmdate("w", $time+9*60*60)] ;
   $now = (
     gmdate("y/m/d",$time+9*60*60) . 
@@ -741,14 +741,14 @@ function regist($name,$email,$sub,$comment,$url,$pwd,$upfile,$upfile_name,$resto
     }
 
     if(RENZOKU && $p && $time - $ltime < RENZOKU){
-      error("連続投稿はもうしばらく時間を置いてからお願い致します",$dest);
+      error("Error: Flood detected, post discarded.",$dest);
     }
 
     if(RENZOKU && $p && $time - $ltime < RENZOKU2 && $upfile_name){
-      error("画像連続投稿はもうしばらく時間を置いてからお願い致します",$dest);
+      error("Error: Flood detected, file discarded.",$dest);
     }
     if(RENZOKU && $p && $comment == $lcom && !$upfile_name){
-      error("連続投稿はもうしばらく時間を置いてからお願い致します",$dest);
+      error("Error: Flood detected.",$dest);
     }
   }
 
@@ -773,7 +773,7 @@ function regist($name,$email,$sub,$comment,$url,$pwd,$upfile,$upfile_name,$resto
     for($i=0;$i<$imax;$i++){ //画像重複チェック
       list(,,,,,,,,,$extensionp,,,$timep,$p,) = explode(",", $line[$i]);
       if($p==$is_uploaded&&file_exists($path.$timep.$extensionp)){
-        error("アップロードに失敗しました<br>同じ画像があります",$dest);
+        error("Error: Duplicate file entry detected.",$dest);
       }
     }
   }
@@ -833,7 +833,7 @@ function regist($name,$email,$sub,$comment,$url,$pwd,$upfile,$upfile_name,$resto
       $newline="$no\n";
     }
     else{
-      error("スレッドがありません",$dest);
+      error("Error: Thread specified does not exist.",$dest);
     }
   }
   $newline.=implode('', $line);
@@ -873,7 +873,7 @@ function regist($name,$email,$sub,$comment,$url,$pwd,$upfile,$upfile_name,$resto
   updatelog();
 
   echo "<html><head><meta charset=\"UTF-8\"><meta http-equiv=\"refresh\" content=\"1;URL=".PHP_SELF2."\"></head>";
-  echo "<body>$mes Posting...</body></html>";
+  echo "<body>$mes Updating page.</body></html>";
 }
 ?>
 
@@ -1317,7 +1317,7 @@ function init(){
       $fp = fopen($value, "w");
       set_file_buffer($fp, 0);
       if($value==LOGFILE){
-        fputs($fp,"1,2002/01/01(月) 00:00,Anonymous,,No Subject,No Text,,,,,,,,\n");
+        fputs($fp,"1,2002/01/01(Sun) 00:00,Anonymous,,No Subject,No Text,,,,,,,,\n");
       }
       if($value==TREEFILE){
         fputs($fp,"1\n");
