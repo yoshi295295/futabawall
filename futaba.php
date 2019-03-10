@@ -354,7 +354,7 @@ function foot(&$dat){
   $dat.='
 <center>
 <small><!-- GazouBBS v3.0 --><!-- ふたば改0.8 -->
-- <a href="http://php.s3.to" target=_top>GazouBBS</a> + <a href="http://www.2chan.net/" target=_top>futaba</a> + futabawall -
+- <a href="http://php.s3.to" target=_top>GazouBBS</a> + <a href="http://www.2chan.net/" target=_top>futaba</a> + <a href="https://github.com/outrunning/futabawall" target=_top>futabawall</a> -
 </small>
 </center>
 </body></html>';
