@@ -266,8 +266,8 @@ function updatelog($resno=0){
     }
 
     $dat.='<table align=right><tr><td nowrap align=center>
-<input type=hidden name=mode value=usrdel>Delete Post[<input type=checkbox name=onlyimgdel value=on>File Only]<br>
-Password<input type=password name=pwd size=8 maxlength=8 value="">
+<input type=hidden name=mode value=usrdel>Delete Post [<input type=checkbox name=onlyimgdel value=on>File Only]<br>
+Password <input type=password name=pwd size=8 maxlength=8 value="">
 <input type=submit value="Delete"></form></td></tr></table>';
 
     if(!$resno){ //res時は表示しない
@@ -1170,8 +1170,8 @@ function admindel($pass){
   echo "<input type=hidden name=admin value=del>\n";
   echo "<input type=hidden name=pass value=\"$pass\">\n";
   echo "<center><P>Please check the checkbox of the article you want to delete and press the delete button.\n";
-  echo "<p><input type=submit value=\"Delete\">";
-  echo "<input type=reset value=\"Reset\">";
+  echo "<p><input type=submit value=\"Delete\"> ";
+  echo "<input type=reset value=\"Reset\"> ";
   echo "[<input type=checkbox name=onlyimgdel value=on>File Only]";
   echo "<P><table border=1 cellspacing=0>\n";
   echo "<tr bgcolor=6080f6><th>Delete?</th><th>Post No.</th><th>Time</th><th>Subject</th>";
@@ -1225,11 +1225,11 @@ function admindel($pass){
     echo "</tr>\n";
   }
 
-  echo "</table><p><input type=submit value=\"Delete$msg\">";
+  echo "</table><p><input type=submit value=\"Delete$msg\"> ";
   echo "<input type=reset value=\"Reset\"></form>";
 
   $all = (int)($all / 1024);
-  echo "【 Space used : <b>$all</b> KB 】";
+  echo "[ Space used: <b>$all</b> KB ]";
   die("</center></body></html>");
 }
 ?>
