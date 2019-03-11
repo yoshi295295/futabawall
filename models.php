@@ -263,7 +263,7 @@ class PrettifyText {
    * @return string replaced name.
    */
   public static function replaceStringOfName($name) {
-    $name = preg_replace("/◆/","◇",$name);
+    $name = preg_replace("/!/","!",$name);
     $name = preg_replace("/[\r\n]/","",$name);
 
     if (self::isAdmin()) {
@@ -277,7 +277,7 @@ class PrettifyText {
     if ($trip_signature !== false) {
       $trip = self::buildTrip($trip_signature);
       $name = self::removeTripSignature($name);
-      $name .= '</b>◆' . $trip . "<b>";
+      $name .= '</b>!' . $trip . "<b>";
     } 
 
     return $name;
