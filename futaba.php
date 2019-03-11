@@ -1251,6 +1251,8 @@ body,tr,td,th { font-size:12pt }
 a:hover { color:#DD0000; }
 span { font-size:20pt }
 small { font-size:10pt }
+#blink { float:left; }
+#home { float:right; }
 -->
 </STYLE>
 <title>'.TITLE.'</title>
@@ -1259,10 +1261,17 @@ function l(e){var P=getCookie("pwdc"),N=getCookie("namec"),i;with(document){for(
 //--></script>
 </head>
 <body bgcolor="#FFFFEE" text="#800000" link="#0000EE" vlink="#0000EE">
-<p align=right>
+<div id="blink">
+[<a href="../a/futaba.php">a</a> / <a href="../b/futaba.php">b</a> / <a href="../c/futaba.php">c</a>]
+</div>
+<div id="home">
 [<a href="'.HOME.'" target="_top">Home</a>]
 [<a href="'.PHP_SELF.'?mode=admin">Manage</a>]
+</div>
+<br>
 <p align=center>
+<img src="boardimg.php">
+<br>
 <font color="#800000" size=5>
 <b><SPAN>'.TITLE.'</SPAN></b></font>
 <hr width="90%" size=1>
