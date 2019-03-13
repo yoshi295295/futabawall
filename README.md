@@ -6,7 +6,7 @@ I've tested this branch and it works fine, however i will still add a disclaimer
 # How to use banners and boardlinks
 **Banners**
 
-Static banner: modify line 1273 from *<img src="boardimg.php">* to *<img src="image.png">*. Make sure the image dimensions are 300x100.
+Static banner: modify line 1273 from *boardimg.php* to *image.png*. Make sure the image dimensions are 300x100.
 
 Rotating banners: replace all the images in bimg/ with your own banners. The filename does not matter, as the banner script (boardimg.php) pulls a random image from the bimg folder. again, make sure the dimensions are 300x100.
 
